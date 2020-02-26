@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose')
 const validate = require('validator')
 
@@ -25,7 +26,7 @@ const contactSchema = new Schema({
             validator: (v) => {
                 return validate.isEmail(v)
             },
-            message: `${v} this email used before`
+            message: `{VALUE} this email used before`
         }
     }
 })
@@ -33,4 +34,4 @@ const contactSchema = new Schema({
 //create model
 const Contact = mongoose.model('Contact', contactSchema)
 
-Contact = module.exports
+module.exports = Contact
