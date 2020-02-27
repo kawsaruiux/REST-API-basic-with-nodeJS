@@ -5,7 +5,6 @@ const bodyParser = require('body-parser') //যে request গুলোর(put, 
 const cors = require('cors')  //package for providing a Connect/Express middleware that can be used to enable CORS with various options.
 
 
-
 // getting-started.js(database create and connect)
 const mongoose = require('mongoose');  //.js mongoose এর সাথে deal করবে আর mongoose database এর সাথে deal করবে 
 mongoose.connect('mongodb://localhost/contacts-db', {useNewUrlParser: true}); // এখানে 'contacts-db' নামের doccument(database) তৈরি হবে 

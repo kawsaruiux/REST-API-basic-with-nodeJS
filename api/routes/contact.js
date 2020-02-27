@@ -3,52 +3,23 @@ const express = require('express')
 
 const router = express.Router() //এই router use করে route গুলো তৈরি করবো
 
-//import Contact model from Contact.js 
-const Contact = require('../models/Contact')
+//import contactController model from contactController.js 
+const contactController = require('../controllers/contactController')
 
 // Get
-router.get('/', (req, res, next) => {
-    Contact.find()
-        .then(contacts => {
-            res.status(200).json({
-                message: 'All Contacts',
-                contacts
-            })
-        })
-        .catch(err => {
-            console.log(err)
-            res.status(500).json({
-                message: 'Error Occured',
-                error: err 
-            })
-        })
-})
+router.get('/', contactController.getAllContactController)
 
 // Post
-router.post('/', (req, res, next) => {
+router.post('/', contactController.postNewContactController)
 
-    //take the value for store 
-    const contact = new Contact({
-        name: req.body.name,
-        phone: req.body.phone,
-        email: req.body.email
-    })
-    //save the value to the database
-    contact.save()
-        .then(data => {
-            res.status(201).json({
-                message: 'Contact added successfully',
-                contact: data
-            })
-        })
-        .catch(err => {console.log(err)
-            res.status(500).json({
-                message: 'Error Occured',
-                error: err 
-            })
-        })
-})
+// Single Get
+router.get('/:id', contactController.getSinglePostController)
 
+//Put
+router.put('/:id', contactController.putController)
+
+//Delete
+router.delete('/:id', contactController.deleteController)
 
 // router টাকে export করে দিলাম (main file e এটা import করতে হবে)
 module.exports = router
