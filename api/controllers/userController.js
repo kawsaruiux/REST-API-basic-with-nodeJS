@@ -37,6 +37,55 @@ const registerUserController = (req, res, next) => {
 }
 
 
+//for user login
+const loginUserController = (req, res, next) => {
+
+    //first, we will get some data from user
+    let email = req.body.email;
+    let password = req.body.password;
+
+    //যে email user পাঠাচ্ছে সেটা database এ আছে কিনা সেটা check করতে হবে (in tutorial-15 (27 min))
+    User.findOne({email})
+        .then(user => {
+            if(user) {
+                //user এর দেয়া password আর database এর password match করেছে কিনা টা check করতে 'bcrypt.compare' use করা হয়
+                bcrypt.compare(password, user.password, (err, result) => {
+                    if(err) {
+                        res.json({
+                            message: 'error occurs'
+                        })
+                    }
+
+                    //যদি database এ data খুজে পাওয়া যায়
+                    if(result){
+                        res.json({
+                            message: 'login Succesfull'
+                        })
+                    }
+                    else{
+                        res.json({
+                            message: 'Login Failed. Password don\'t match'
+                        })
+                    }
+                })
+            }
+            else{
+                res.json({
+                    message: 'User not found'
+                })
+            }
+        })
+        .catch(err =>{
+            console.log(err)
+            res.status(500).json({
+                message: 'Erron occurs',
+                error: err
+            })
+        })
+
+} 
+
+
 //for find all the registered user
 const getAllRegisteredUser = (req, res, next) => {
     User.find()
@@ -58,5 +107,6 @@ const getAllRegisteredUser = (req, res, next) => {
 
 module.exports = {
     registerUserController,
-    getAllRegisteredUser
+    getAllRegisteredUser,
+    loginUserController
 }
