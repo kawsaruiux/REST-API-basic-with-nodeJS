@@ -20,8 +20,9 @@ db.once('open', function() {
 
 
 
-// router টাকে import করা হলো যেটা contact.js থেকে export করা হয়েছিলো
+// router connect 
 const contactRouter = require('./api/routes/contact')
+const userRouter = require('./api/routes/user')
 
 
 
@@ -36,8 +37,9 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 
-
+// set url
 app.use('/api/contacts', contactRouter)
+app.use('/api/users', userRouter)
 
 
 
