@@ -1,5 +1,6 @@
 
 const bcrypt = require('bcrypt')  //for hash the plain password 
+const jwt = require('jsonwebtoken') //for keep user information for the surtan time that help user to enter system without login every time
 
 const User = require('../models/User')
 
@@ -58,8 +59,12 @@ const loginUserController = (req, res, next) => {
 
                     //যদি database এ data খুজে পাওয়া যায়
                     if(result){
+                        //make a token for the user
+                        let token = jwt.sign({email: user.email, _id: user._id}, 'SECRET', {expiresIn: '2h'})
+
                         res.json({
-                            message: 'login Succesfull'
+                            message: 'login Succesfull',
+                            token
                         })
                     }
                     else{
